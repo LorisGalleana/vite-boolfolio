@@ -11,7 +11,7 @@
         data() {
             return {
                 projects:[],
-                isLoading: false,
+                isLoading: true,
                 paginatorData:{
                     current_page:1,
                     links:[]
@@ -19,12 +19,14 @@
             }
         },
         methods:{
-            getApi(){
-                axios.get(store.apiUrl + 'projects')
+            getApi(apiUrl){
+                this.isLoading = true;
+
+                axios.get(apiUrl)
                 .then(response => {
                     this.projects = response.data.data;
-                    this.paginatorData.current_page = result.data.current_page;
-                    this.paginatorData.links = result.data.links;
+                    this.paginatorData.current_page = response.data.current_page;
+                    this.paginatorData.links = response.data.links;
                     this.isLoading = false
                 })
                 .catch(error => {
@@ -33,7 +35,7 @@
             }
         },
         mounted(){
-            this.getApi()
+            this.getApi(store.apiUrl + 'projects')
         }
     }
 </script>
@@ -50,7 +52,7 @@
            <li v-for="project in projects" :key="project.id">{{ project.title }}</li>
         </ul>
         <div class="paginator">
-            <button v-for="(link, index) in paginatorData" :key="index">{{ link.label }}</button>   
+            <button v-for="(link, index) in paginatorData.links" :key="index" v-html="link.label" :disabled="link.active || !link.url" @click="getApi(link.url)"></button>   
         </div> 
     </div>
   </div>
