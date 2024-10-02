@@ -3,6 +3,8 @@ import Home from '../pages/Home.vue'
 import Works from '../pages/Works.vue'
 import ProjectDetail from '../pages/ProjectDetail.vue'
 import Error404 from '../pages/Error404.vue'
+import ProjectType from '../pages/ProjectType.vue'
+import ProjectTechnology from '../pages/ProjectTechnology.vue'
 
 
 const router = createRouter({
@@ -24,9 +26,23 @@ const router = createRouter({
       component: ProjectDetail
     },
     {
+      path: '/progetti-per-tipologia/:slug',
+      name: 'projectType',
+      component: ProjectType
+    },
+    {
+      path: '/progetti-per-tecnologia/:slug',
+      name: 'projectTechnology',
+      component: ProjectTechnology
+    },
+    {
       path: '/404',
       name: '404',
       component: Error404
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '404'
     },
   ]
 })

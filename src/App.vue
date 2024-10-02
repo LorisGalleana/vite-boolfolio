@@ -19,6 +19,13 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+ul{
+  width: 10%;
+  margin: 0 auto;
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+}
 
 </style>

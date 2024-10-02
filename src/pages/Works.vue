@@ -102,10 +102,14 @@
         </div>
         <div class="box-container">
             <div class="box">
-                <button v-for="type in types" :key="type.id">{{ type.name }}</button>
+                <router-link class="badge" v-for="type in types" :key="type.id" :to="{name: 'projectType', params:{ slug: type.slug}}">
+                    {{ type.name }}
+                </router-link>
             </div>
             <div class="box">
-                <button v-for="technology in technologies" :key="technology.id">{{ technology.name }}</button>
+                <router-link class="badge" v-for="technology in technologies" :key="technology.id" :to="{name: 'projectTechnology', params:{ slug: technology.slug}}">
+                    {{ technology.name }}
+                </router-link>
             </div>
         </div>
     </div>
@@ -148,6 +152,20 @@
         max-width: 200px;
         button{
             margin: 3px;
+        }
+        .badge{
+            display: inline-block;
+            margin: 5px 7px;
+            padding: 3px 5px;
+            border-radius: 5px;
+            border: 1px solid black;
+            background-color: lightgray;
+            color: black;
+            text-decoration: none;
+            font-size: .8rem;
+            &:hover{
+                background-color: yellow;
+            }
         }
     }
 }
