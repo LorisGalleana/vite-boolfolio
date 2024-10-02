@@ -2,6 +2,7 @@
     import axios from 'axios';
     import { store } from '../store/store';
     import Loader from '../components/partials/Loader.vue';
+    import { getType, getTechnology, formatData } from '../data/utils' ;
 
     export default{
         name: 'Works',
@@ -17,7 +18,10 @@
                     links:[]
                 },
                 types:[],
-                technologies:[]
+                technologies:[],
+                getType,
+                getTechnology,
+                formatData
             }
         },
         methods:{
@@ -56,12 +60,14 @@
                 .catch(error => {
                     console.log(error.message);
                 })
-            }
+            },
+            
         },
         mounted(){
             this.getApi(store.apiUrl + 'projects', 'projects')
             this.getApi(store.apiUrl + 'types', 'types')
             this.getApi(store.apiUrl + 'technologies', 'technologies')
+            
         }
     }
 </script>
@@ -76,7 +82,19 @@
     <div class="content" v-else>
         <div>
             <ul>
-            <li v-for="project in projects" :key="project.id">{{ project.title }}</li>
+                <li v-for="project in projects" :key="project.id">
+                   <p class="title">
+                    <router-link :to="{name: 'projectDetail', params:{slug: project.slug}}">{{ project.title }}</router-link>
+                   </p>
+                   <div class="caption">
+                    <small>
+                        Tipologia: {{ getType(project) }}
+                        | Tecnologie: {{ getTechnology(project) }}
+                        | {{ formatData(project.created_at) }}
+                        
+                    </small>
+                </div> 
+                </li>
             </ul>
             <div class="paginator">
                 <button v-for="(link, index) in paginatorData.links" :key="index" v-html="link.label" :disabled="link.active || !link.url" @click="getApi(link.url)"></button>   
@@ -109,6 +127,19 @@
 }
 .content{
     display: flex;
+    .title, .caption{
+        line-height: 5px;
+    }
+    a{
+        color: black;
+        
+        &:hover{
+            color: red;
+        }
+    }
+    .caption{
+        font-size: 0.8rem;
+    }
     .box{
         border-radius: 5px;
         border: 1px solid black;
