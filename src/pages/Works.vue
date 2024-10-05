@@ -2,12 +2,14 @@
     import axios from 'axios';
     import { store } from '../store/store';
     import Loader from '../components/partials/Loader.vue';
+    import Paginator from '../components/partials/Paginator.vue';
     import { getType, getTechnology, formatData } from '../data/utils' ;
 
     export default{
         name: 'Works',
         components:{
-            Loader
+            Loader,
+            Paginator
         },
         data() {
             return {
@@ -96,9 +98,10 @@
                 </div> 
                 </li>
             </ul>
-            <div class="paginator">
-                <button v-for="(link, index) in paginatorData.links" :key="index" v-html="link.label" :disabled="link.active || !link.url" @click="getApi(link.url)"></button>   
-            </div> 
+
+            <Paginator :data="paginatorData" @callApi="getApi" />
+
+            
         </div>
         <div class="box-container">
             <div class="box">
@@ -122,13 +125,7 @@
     justify-content: center;
     padding: 30px 0;
 }
-.paginator{
-    display: flex;
-    justify-content: center;
-    button{
-        margin: 0 3px;
-    }
-}
+
 .content{
     display: flex;
     .title, .caption{
