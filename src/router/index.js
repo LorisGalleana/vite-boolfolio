@@ -5,6 +5,7 @@ import ProjectDetail from '../pages/ProjectDetail.vue'
 import Error404 from '../pages/Error404.vue'
 import ProjectType from '../pages/ProjectType.vue'
 import ProjectTechnology from '../pages/ProjectTechnology.vue'
+import Contacts from '../pages/Contacts.vue'
 
 
 const router = createRouter({
@@ -19,6 +20,11 @@ const router = createRouter({
       path: '/progetti',
       name: 'works',
       component: Works
+    },
+    {
+      path: '/contatti',
+      name: 'contacts',
+      component: Contacts
     },
     {
       path: '/dettaglio-progetto/:slug',
